@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!--
+  卖点转买点 · 买点库报告模板
+  使用说明：
+  1. 复制本文件，按下方 {{占位}} 与注释替换内容；
+  2. 商品图复制到报告同级目录，用相对路径引用（如 ./goods-main.jpg）；
+  3. 买点卡片按 Tier 1 → 2 → 3 分区排列，卡片数量随买点数增减；
+  4. 热度徽章三档：h-hot（高）/ h-mid（中）/ h-low（低）；
+  5. 内容侧信号区必填：新发现（待确认买点）+ 风险提示（话术避雷）。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{商品名}} · 买点库</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#faf8f5;color:#2b2b2b;line-height:1.7;padding:32px 16px 48px;}
+  .wrap{max-width:1080px;margin:0 auto;}
+  .hero{background:linear-gradient(135deg,#4a3f35 0%,#6b5b4d 55%,#8a7a68 100%);color:#fff;border-radius:16px;padding:28px 30px;position:relative;overflow:hidden;}
+  .hero::after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06);}
+  .hero .brand{font-size:13px;letter-spacing:2px;opacity:.85;font-weight:600;}
+  .hero h1{font-size:26px;margin:6px 0 2px;font-weight:700;}
+  .hero .model{font-size:15px;opacity:.9;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px 12px;font-size:12.5px;}
+  .chip b{font-weight:700;}
+  .imgs{display:flex;gap:12px;margin-top:18px;}
+  .imgs img{flex:1;min-width:0;border-radius:10px;max-height:220px;object-fit:cover;display:block;}
+  .tagline{margin-top:22px;background:#f4f0ea;border-radius:12px;padding:14px 18px;font-size:13.5px;color:#5a5148;}
+  .tagline b{color:#3d332b;}
+  .how{margin-top:12px;background:#eef4ff;border:1px solid #d4e0f5;border-radius:12px;padding:12px 16px;font-size:12.5px;color:#33475f;line-height:1.7;}
+  .how b{color:#1f4a8a;}
+  .sec-title{font-size:18px;font-weight:700;margin:30px 0 4px;color:#3d332b;}
+  .sec-sub{font-size:13px;color:#8a8178;margin-bottom:14px;}
+  .tier{display:flex;align-items:center;gap:8px;margin:22px 0 10px;flex-wrap:wrap;}
+  .tier-badge{font-size:12.5px;font-weight:800;border-radius:8px;padding:4px 12px;color:#fff;}
+  .t1{background:#c25e3c;} .t2{background:#2f6bd6;} .t3{background:#9a9a9a;}
+  .tier-name{font-size:14px;font-weight:700;color:#3d332b;}
+  .tier-desc{font-size:12.5px;color:#8a8178;margin-left:4px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;}
+  .card{background:#fff;border:1px solid #ece7e0;border-radius:14px;padding:18px 18px 14px;box-shadow:0 2px 8px rgba(90,70,50,.05);display:flex;flex-direction:column;gap:8px;}
+  .card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .bid{font-size:12px;font-weight:800;color:#a0896f;letter-spacing:.5px;}
+  .sell{font-size:12px;color:#a79b8e;background:#f4f0ea;border-radius:6px;padding:2px 8px;}
+  .benefit{font-size:15.5px;font-weight:700;color:#2b2b2b;line-height:1.55;margin-top:2px;}
+  .benefit .arr{color:#c25e3c;}
+  .field{font-size:12.5px;color:#6f675e;line-height:1.6;}
+  .field b{color:#4a3f35;font-weight:600;}
+  .shot{display:flex;flex-wrap:wrap;gap:6px;}
+  .shot span{font-size:12px;background:#eef1f5;color:#4a5a72;border-radius:6px;padding:2px 8px;}
+  .card-bottom{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;align-items:center;}
+  .badge{font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 10px;}
+  .b-high{background:#e3f2e8;color:#1f7a4d;}
+  .b-mid{background:#fdf0dc;color:#9a6a00;}
+  .heat{font-size:11.5px;font-weight:800;border-radius:999px;padding:3px 10px;}
+  .h-hot{background:#fde8e8;color:#b03535;}
+  .h-mid{background:#fff3d6;color:#a06a00;}
+  .h-low{background:#ececec;color:#777;}
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-top:4px;}
+  .panel{background:#fff;border-radius:14px;padding:18px;border:1px solid #ece7e0;}
+  .panel h3{font-size:14.5px;font-weight:700;margin-bottom:8px;}
+  .panel ul{padding-left:18px;}
+  .panel li{font-size:13px;margin:5px 0;color:#4a453f;}
+  .p-new{border-left:4px solid #1467b0;}
+  .p-risk{border-left:4px solid #b03535;}
+  .p-risk li{color:#8a3a3a;}
+  .foot{font-size:12px;color:#a29a90;margin-top:30px;padding-top:14px;border-top:1px solid #e5dfd6;line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Hero：商品名、品牌、价格、平台数据、商品图 -->
+  <div class="hero">
+    <div class="brand">{{品牌}} · {{店铺身份}}</div>
+    <h1>{{商品名}}</h1>
+    <div class="model">{{系列/联名/卖点型别}}</div>
+    <div class="chips">
+      <span class="chip">价格 <b>{{专享价}}</b></span>
+      <span class="chip">{{平台数据 chip 1}}</span>
+      <span class="chip">{{平台数据 chip 2}}</span>
+      <span class="chip">{{保障 chip}}</span>
+    </div>
+    <div class="imgs">
+      <img src="./{{主图文件名}}" alt="{{主图说明}}">
+      <img src="./{{详情图文件名}}" alt="{{详情图说明}}">
+    </div>
+  </div>
+
+  <!-- 一句话策略：先打 Tier1，差异用 Tier2，底座用 Tier3 -->
+  <div class="tagline"><b>先打什么：</b>{{一句话策略}}</div>
+  <div class="how"><b>排序依据：</b>{{内容侧核验口径说明，说明不是拍脑袋}}</div>
+
+  <!-- Tier 1：数据验证核心 -->
+  <div class="tier"><span class="tier-badge t1">Tier 1</span><span class="tier-name">{{档位名}}</span><span class="tier-desc">{{档位说明}}</span></div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-top"><span class="bid">BP-{{编号}}</span><span class="sell">卖点：{{原始卖点}}</span></div>
+      <div class="benefit"><span class="arr">▶</span> {{收益句：用户愿意掏钱的理由，说人话写画面}}</div>
+      <div class="field"><b>证据：</b>{{官方证据}}<br><b>内容侧：</b>{{内容侧信号（频次/互动量）}}</div>
+      <div class="shot"><span>{{拍摄角度1}}</span><span>{{拍摄角度2}}</span><span>{{拍摄角度3}}</span></div>
+      <div class="card-bottom"><span class="badge {{b-high|b-mid}}">证据·{{高|中|低}}</span><span class="heat {{h-hot|h-mid|h-low}}">热度 · {{高|中|低}}</span></div>
+    </div>
+    <!-- 复制本卡片，每条买点一张 -->
+  </div>
+
+  <!-- Tier 2：有信号 + 竞争空隙（含内容侧新发现，标"待商家确认"） -->
+  <div class="tier"><span class="tier-badge t2">Tier 2</span><span class="tier-name">{{档位名}}</span><span class="tier-desc">{{档位说明}}</span></div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-top"><span class="bid">BP-{{编号}}</span><span class="sell">卖点：{{原始卖点}}</span></div>
+      <div class="benefit"><span class="arr">▶</span> {{收益句}}</div>
+      <div class="field"><b>证据：</b>{{官方证据}}<br><b>内容侧：</b>{{内容侧信号}}</div>
+      <div class="shot"><span>{{拍摄角度}}</span></div>
+      <div class="card-bottom"><span class="badge {{b-high|b-mid}}">证据·{{高|中|待核验}}</span><span class="heat {{h-hot|h-mid|h-low}}">热度 · {{高|中|低}}</span></div>
+    </div>
+    <!-- 内容侧新发现买点：证据写"商品资料未明示；内容侧多条提及 → 待商家确认" -->
+  </div>
+
+  <!-- Tier 3：支撑与信任 -->
+  <div class="tier"><span class="tier-badge t3">Tier 3</span><span class="tier-name">{{档位名}}</span><span class="tier-desc">{{档位说明}}</span></div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-top"><span class="bid">BP-{{编号}}</span><span class="sell">卖点：{{原始卖点}}</span></div>
+      <div class="benefit"><span class="arr">▶</span> {{收益句}}</div>
+      <div class="field"><b>证据：</b>{{证据}}</div>
+      <div class="shot"><span>{{拍摄角度}}</span></div>
+      <div class="card-bottom"><span class="badge {{b-high|b-mid}}">证据·{{高|中}}</span><span class="heat h-low">热度 · 低</span></div>
+    </div>
+  </div>
+
+  <!-- 内容侧信号区：必填 -->
+  <div class="sec-title">内容侧信号 · 新发现与风险</div>
+  <div class="row">
+    <div class="panel p-new">
+      <h3>🆕 新发现（内容高频提及，待商家确认）</h3>
+      <ul>
+        <li>{{新发现买点1 + 证据}}</li>
+        <li>{{新发现买点2 + 证据}}</li>
+      </ul>
+    </div>
+    <div class="panel p-risk">
+      <h3>⚠ 风险信号（拍摄与话术避雷）</h3>
+      <ul>
+        <li>{{负面信号 + 避雷建议}}</li>
+        <li>{{唱反调/价格争议 + 避雷建议}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot">
+    资料来源：{{输入资料说明 + 日期}}；抖音内容侧信号来自同品类视频检索（{{日期}}，含点赞/评论数据）。<br>
+    本页由 sell-point-to-buy-point Skill 生成；排序 = 内容侧需求热度 × 竞争空隙，Tier 1 建议第一波优先测试。
+  </div>
+</div>
+</body>
+</html>
