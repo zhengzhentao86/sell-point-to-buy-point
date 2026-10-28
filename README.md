@@ -18,6 +18,8 @@
 
 ## 二、怎么安装？（一次性，5 分钟）
 
+> **先下载安装包**：[点击下载 sell-point-to-buy-point.zip](https://github.com/zhengzhentao86/sell-point-to-buy-point/releases/download/v1.0.0/sell-point-to-buy-point.zip)（约 1M，GitHub 官方链接）
+
 1. 拿到压缩包 `sell-point-to-buy-point.zip`，双击解压，得到一个文件夹 `sell-point-to-buy-point`
 2. 把这个文件夹，**整个**放进你的 skills 文件夹
    - 每台电脑位置不一样，一般是 `~/.agents/skills` 或 `workspace/.user_skills`
